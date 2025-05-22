@@ -17,9 +17,11 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Only load .env if not in production
-if not os.environ.get('DJANGO_SETTINGS_PRODUCTION', '').lower() == 'true':
+production_env = os.environ.get('DJANGO_SETTINGS_PRODUCTION', 'False').lower() == 'true'
+
+if not production_env:
     from dotenv import load_dotenv
-    load_dotenv(os.path.join(BASE_DIR, '../.env.development'))
+    load_dotenv(os.path.join(BASE_DIR, '../.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -27,7 +29,7 @@ if not os.environ.get('DJANGO_SETTINGS_PRODUCTION', '').lower() == 'true':
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() == 'true'
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -78,7 +80,7 @@ DATABASES = {
         'NAME': os.environ.get('POSTGRES_DB', ''),
         'USER': os.environ.get('POSTGRES_USER', ''),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
-        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+        'HOST': 'db' if production_env else 'localhost',
         'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
 }
