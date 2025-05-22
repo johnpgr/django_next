@@ -6,7 +6,7 @@
         "format": "prettier --write .",
         "dev": "next dev --turbopack",
         "build": "next build",
-        "start": "next start",
+        "start": "node .next/standalone/server.js",
         "lint": "next lint"
     },
     "prettier": {
