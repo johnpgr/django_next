@@ -12,9 +12,10 @@ const API_BASE_URL = IS_PRODUCTION
  * @param options Optional fetch options (method, headers, body, etc.).
  * @returns Promise<T> The JSON response from the API.
  */
-async function fetchAPI<T = any>(
+export async function fetchAPI<T = any>(
     endpoint: string,
     options: RequestInit = {},
+    next: NextFetchRequestConfig = {},
 ): Promise<T> {
     const url = `${API_BASE_URL}${endpoint}`
 
@@ -28,6 +29,7 @@ async function fetchAPI<T = any>(
             ...defaultHeaders,
             ...options.headers,
         },
+        next,
     }
 
     try {
