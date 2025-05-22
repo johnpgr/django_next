@@ -6,7 +6,7 @@ services:
     ports:
       - 8000:8000
     env_file:
-      - ./server/.env.production
+      - .env.production
     environment:
       - DJANGO_DEBUG=False
       - DJANGO_SETTINGS_PRODUCTION=True
